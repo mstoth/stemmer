@@ -23,7 +23,7 @@
   [s] 
   (let [b (:word s) j (inc (get-index s))]
     (if (< j (count b))
-      (subvec b 0 j)
+       (subs b 0 j)
       b)))
 
 (defn foo

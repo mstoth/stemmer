@@ -25,7 +25,7 @@
 
 (deftest test-subword
   (testing "getting the subword"
-           (let [s (struct stemmer "looking" 4)]
+           (let [s (struct stemmer "looking" 3)]
              (is (= "look" (subword s))))))
 
 (run-tests)

@@ -26,6 +26,6 @@
 (deftest test-subword
   (testing "getting the subword"
            (let [s (struct stemmer "looking" 4)]
-             (is (= (vec "look") (subword s))))))
+             (is (= "look" (subword s))))))
 
 (run-tests)

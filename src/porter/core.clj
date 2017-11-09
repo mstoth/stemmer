@@ -35,6 +35,22 @@
   [s]
   (assoc s :word (pop (:word s))))
 
+(defn pop-stemmer-on
+  "This is an amalgam of a number of
+  different functions: pop (it walks
+  through the :word sequence using pop);
+  drop-while (it drops items off while
+  testing the sequence against drop-while);
+  and maplist from Common Lisp (the
+  predicate is tested against the entire
+  current stemmer, not just the first
+  element)."
+  [predicate stemmer]
+  (if (and (seq (:word stemmer)) (predicate stemmer))
+    (recur predicate (pop-word stemmer))
+    stemmer))
+
+
 (defn foo
   "I don't do a whole lot."
   [x]

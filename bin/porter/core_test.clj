@@ -39,5 +39,10 @@
            (is (= (:word (make-stemmer "lookin"))
                   (:word (pop-word (make-stemmer "looking")))))))
 
+(deftest test-pop-stemmer-on
+  (testing "pops the last character"
+           (let [st (make-stemmer "looking")]
+           (is (= (vec "lookin") (:word (pop-stemmer-on #(= (peek (:word %1)) \g) st)))))))
+
 
 (run-tests)

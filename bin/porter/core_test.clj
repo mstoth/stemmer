@@ -44,5 +44,30 @@
            (let [st (make-stemmer "looking")]
            (is (= (vec "lookin") (:word (pop-stemmer-on #(= (peek (:word %1)) \g) st)))))))
 
+(deftest test-vowels
+  (testing "vowels exists" 
+           (is (= 5 (count vowel-letter?)))))
+
+(deftest test-consonant?
+  (testing "consonant predicate"
+           (let [s (make-stemmer "looking")]
+             (is (= true (consonant? s))))))
+
+(deftest test-vowel? 
+  (testing "vowel?" 
+           (let [s (make-stemmer "sxgy")]
+             (is (= true (vowel? s))))))
+
+(deftest test-vowel-in-stem?
+  (testing "vowel in stem" 
+           (let [s (make-stemmer "little")]
+             (is (= true (vowel-in-stem? s))))))
+
+(deftest test-double-c?
+  (testing "double consonant" 
+           (let [s (make-stemmer "little")]
+             (is (= false (double-c? s))))))
+
+
 
 (run-tests)

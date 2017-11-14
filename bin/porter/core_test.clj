@@ -67,7 +67,13 @@
   (testing "double consonant" 
            (let [s (make-stemmer "little")]
              (is (= false (double-c? s))))))
+             
 
+
+(deftest test-ends?
+  (testing "ends with a given suffix. returns vector of the stemmer and true or false." 
+           (let [s (make-stemmer "little")]
+             (is (= [s false] (ends? st "ed"))))))
 
 
 (run-tests)

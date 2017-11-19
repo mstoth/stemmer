@@ -75,5 +75,8 @@
            (let [s (make-stemmer "little")]
              (is (= [s false] (ends? st "ed"))))))
 
-
+(deftest test-r
+  (testing "replaces end of word with suffix if there is a consonant cluster" 
+           (let [st (make-stemmer "five")]
+             (is (= st (r (assoc st :index 0) st "ive"))))))
 (run-tests)

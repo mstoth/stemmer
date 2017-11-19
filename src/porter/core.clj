@@ -145,6 +145,12 @@
   [stemmer new-end]
   (reset-index (into (subword stemmer) new-end)))
 
+(defn r
+  "This is used further down."
+  [stemmer orig-stemmer s]
+  (if (pos? (m stemmer))
+    (set-to stemmer s)
+    orig-stemmer))
 
 (defn foo
   "I don't do a whole lot."

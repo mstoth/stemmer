@@ -68,12 +68,19 @@
            (let [s (make-stemmer "little")]
              (is (= false (double-c? s))))))
              
+(deftest test-if-ends? 
+  (testing "macro" 
+           (let [ans (with-out-str (println (assoc (make-stemmer "names") :index 3) "YES: had a plural suffix"))]
+             (is (= ans (with-out-str (if-ends? x (make-stemmer "names") "s"
+                                                (println x "YES: had a plural suffix")
+                                                (println x "NO : never had a plural suffix"))))))))
 
+             
 
 (deftest test-ends?
   (testing "ends with a given suffix. returns vector of the stemmer and true or false." 
-           (let [s (make-stemmer "little")]
-             (is (= [s false] (ends? st "ed"))))))
+           (let [st (make-stemmer "little")]
+             (is (= [st false] (ends? st "ed"))))))
 
 (deftest test-r
   (testing "replaces end of word with suffix if there is a consonant cluster" 

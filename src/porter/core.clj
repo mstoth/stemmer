@@ -139,6 +139,34 @@
       [(assoc stemmer :index (dec j)) true]
       [stemmer false])))
 
+(defmacro if-ends?
+  "Instead of the function ends?, I'm using this:
+  (if-ends? x (make-stemmer \"names\") [\\s]
+            (println x \"no longer has a plural suffix\")
+            (println x \"never had a plural suffix\"))
+  "
+  ([var stemmer end true-expr]
+   (let [vend (vec end)]
+     `(let [stemmer# ~stemmer,
+            end# ~vend,
+            word# (subword stemmer#),
+            j# (- (count word#) (count end#))]
+        (if (and (pos? j#) (= (subvec word# j#) end#))
+          (let [~var (assoc stemmer# :index (dec j#))]
+            ~true-expr)
+          stemmer#))))
+  ([var stemmer end true-expr false-expr]
+   (let [vend (vec end)]
+     `(let [stemmer# ~stemmer,
+            end# ~vend,
+            word# (subword stemmer#),
+            j# (- (count word#) (count end#))]
+        (if (and (pos? j#) (= (subvec word# j#) end#))
+          (let [~var (assoc stemmer# :index (dec j#))]
+            ~true-expr)
+          (let [~var stemmer#]
+            ~false-expr))))))
+
 
 (defn set-to
   "This sets the last j+1 characters to x and readjusts the length of b."

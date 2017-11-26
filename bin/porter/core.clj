@@ -180,6 +180,25 @@
     (set-to stemmer s)
     orig-stemmer))
 
+(defn make-cond-ends-test
+  [var stemmer word end true-expr false-expr]
+  (let [vend (vec end)]
+    `(let [j# (- (count ~word) ~(count vend))]
+       (if (and (pos? j#) (= (subvec ~word j#) ~vend))
+         (let [~var (assoc ~stemmer :index (dec j#))]
+           ~true-expr)
+         ~false-expr))))
+
+(defmacro cond-ends-helper
+  "This helps cond-ends? by processing the
+  test-exprs pairs in cond-ends?'s environment."
+  ;; The earlier override goes here....
+  ([var stemmer word end true-expr & more]
+   (make-cond-ends-test
+      var stemmer word end true-expr
+      `(cond-ends-helper ~var ~stemmer ~word ~@more))))
+
+
 (defn foo
   "I don't do a whole lot."
   [x]
